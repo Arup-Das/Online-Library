@@ -54,4 +54,10 @@ public class UserRegistrationModel {
 	public void setConfirmEmail(String confirmEmail) {
 		this.confirmEmail = confirmEmail;
 	}
+	@Override
+	public String toString() {
+		return "UserRegistrationModel [firstName=" + firstName + ", lastName=" + lastName + ", password=" + password
+				+ ", confirmPassword=" + confirmPassword + ", email=" + email + ", confirmEmail=" + confirmEmail + "]";
+	}
+	
 }
