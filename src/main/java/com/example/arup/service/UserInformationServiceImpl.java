@@ -1,5 +1,6 @@
 package com.example.arup.service;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -24,10 +25,13 @@ public class UserInformationServiceImpl implements UserInformationService {
 	
 	@Override
 	public UserInformationModel findUserByEmail(String email) {
-		UserInfo userInfoEntity = userInfoRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User with email "+email+" not found."));
-		ModelMapper modelMapper = new ModelMapper();
-		UserInformationModel userInformation = modelMapper.map(userInfoEntity, UserInformationModel.class);
-		return userInformation;
+		Optional<UserInfo> userInfoEntity = userInfoRepository.findByEmail(email);
+		if(userInfoEntity.isPresent()) {
+			ModelMapper modelMapper = new ModelMapper();
+			UserInformationModel userInformation = modelMapper.map(userInfoEntity.get(), UserInformationModel.class);
+			return userInformation;
+		}
+		return null;
 	}
 
 	@Override

@@ -11,14 +11,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.Size;
 
 @Entity
 public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
+	@Size(min=1)
 	@Column(name="user_name",nullable=false,unique=true)
 	private String username;
+	@Size(min=4)
 	@Column(name="password",nullable=false)
 	private String password;
 	private int active;

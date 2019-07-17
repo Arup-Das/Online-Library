@@ -23,18 +23,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-			.antMatchers("/registration**","/js/**","/css/**","/img/**").permitAll()
-			.anyRequest().authenticated()
+				.antMatchers("/registration**","/js/**","/css/**","/img/**","/webjars/**").permitAll()
+				.anyRequest().authenticated()
 			.and()
-			.formLogin()
-			.loginPage("/login").permitAll()
+				.formLogin()
+				.loginPage("/login").permitAll()
 			.and()
-            .logout()
-            .invalidateHttpSession(true)
-            .clearAuthentication(true)
-            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-            .logoutSuccessUrl("/login?logout")
-            .permitAll();
+            	.logout()
+            		.invalidateHttpSession(true)
+            		.clearAuthentication(true)
+            		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+            		.logoutSuccessUrl("/login?logout")
+            	.permitAll();
 		
 	}
 	@Bean
@@ -47,7 +47,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(authenticationProvider());
-	}
-	
-	
+	}	
 }

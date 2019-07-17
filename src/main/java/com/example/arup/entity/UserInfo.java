@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="user_information")
@@ -13,10 +14,13 @@ public class UserInfo {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
+	@Size(min=1)
 	@Column(name="first_name",nullable=false)
 	private String firstName;
+	@Size(min=1)
 	@Column(name="last_name",nullable=false)
 	private String lastName;
+	@Size(min=1)
 	@Column(name="email",nullable=false,unique=true)
 	private String email;
 	public long getId() {
