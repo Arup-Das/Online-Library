@@ -22,6 +22,8 @@ public class UserInformationServiceImpl implements UserInformationService {
 	private UserInfoRepository userInfoRepository;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private VerificationTokenService verificationTokenService;
 	
 	@Override
 	public UserInformationModel findUserByEmail(String email) {
@@ -44,6 +46,7 @@ public class UserInformationServiceImpl implements UserInformationService {
 		UserInfo userInfoEntity = modelMapper.map(registerUserInfo, UserInfo.class);
 		UserInfo storedUserInfoEntity = userInfoRepository.save(userInfoEntity);
 		UserInformationModel storedUserInfo = modelMapper.map(storedUserInfoEntity, UserInformationModel.class);
+		verificationTokenService.sendVerificationToken(storedUserInfo.getEmail());
 		return storedUserInfo;
 	}
 

@@ -10,16 +10,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.arup.model.UserInformationModel;
 import com.example.arup.model.UserRegistrationModel;
 import com.example.arup.service.UserInformationService;
+import com.example.arup.service.VerificationTokenService;
 
 @Controller
 @RequestMapping("/registration")
 public class UserRegistrationController {
 	@Autowired
 	private UserInformationService userInformationService;
+	@Autowired
+	private VerificationTokenService verificationTokenService;
 	
 	@ModelAttribute("userInfo")
 	public UserRegistrationModel userRegistrationModel() {
@@ -41,4 +45,10 @@ public class UserRegistrationController {
 		userInformationService.save(userInfo);
 		return "redirect:/registration?success";
 	}
+	@GetMapping("/verify-user")
+    @ResponseBody
+    public String verifyEmail(String code) {
+		System.out.println("Here...");
+        return verificationTokenService.verifyUser(code).getBody();
+    }
 }

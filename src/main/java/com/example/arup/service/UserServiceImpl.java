@@ -36,11 +36,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found"));
-		boolean enabled = false;
-		if(user.getActive() == 1 ) {
-			enabled = true;
-		}
-		UserDetails loggedInUser = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), enabled, true, true, true, getAuthorities(user));
+		UserDetails loggedInUser = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.isActive(), true, true, true, getAuthorities(user));
 		return loggedInUser;
 	}
 
@@ -65,7 +61,7 @@ public class UserServiceImpl implements UserService{
 		ModelMapper modelMapper = new ModelMapper();
 		User userEntity = modelMapper.map(user, User.class);
 		userEntity.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		userEntity.setActive(1);
+		userEntity.setActive(false);
 		
 		Set<Role> userRoles = new HashSet<>();
 		Role role = roleRepository.findByRole(RoleName.USER_BASIC.name());
